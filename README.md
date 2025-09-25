@@ -2,9 +2,6 @@
 
 A production-ready, password-less authentication template for Next.js 14+. Built with a modern, server-centric stack including the App Router, Drizzle ORM, and Iron Session.
 
-[![Deploy with Vercel](https://vercel.com/button)](https://vercel.com/new/clone?repository-url=https%3A%2F%2Fgithub.com%2Favisantoso%2Fnext-auth-fortress&project-name=my-secure-app&repository-name=my-secure-app&env=SESSION_KEY,TURSO_DATABASE_URL,TURSO_AUTH_TOKEN,GOOGLE_CLIENT_ID,GOOGLE_CLIENT_SECRET,GOOGLE_REDIRECT_URL,RESEND_API_KEY,NEXT_PUBLIC_APP_URL,RPID,NOREPLY_EMAIL,BRAND_NAME&envDescription=Environment%20variables%20for%20your%20app.&demo-title=Next-Auth%20Fortress%20Demo&demo-description=See%20passwordless%20authentication%20in%20action.&demo-url=https%3A%2F%2Fnext-auth-fortress.vercel.app%2F)
-&nbsp;
-
 ---
 
 ## Introduction
