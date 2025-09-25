@@ -10,7 +10,7 @@ export const useAppStore = create<AppState>(() => ({
   loginPageEmail: "",
 }));
 
-const { setState, getState } = useAppStore;
+const { setState } = useAppStore;
 
 export function setLoginPageEmail(email: string) {
   setState({ loginPageEmail: email });

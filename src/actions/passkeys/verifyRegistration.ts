@@ -117,10 +117,6 @@ export async function verifyRegistration(
       domain: HOST_SETTINGS.expectedOrigin,
     });
 
-    console.log(
-      `[WebAuthn] Successfully saved new passkey for user ${email}, credential ID: ${credential.id}`
-    );
-
     return { credentialId: credential.id };
   } catch (dbError) {
     console.error(dbError);

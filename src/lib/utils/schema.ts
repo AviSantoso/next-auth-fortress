@@ -1,38 +1,33 @@
 import {
-  boolean,
   integer,
-  pgTable,
-  timestamp,
+  sqliteTable,
   text,
-  customType,
   uniqueIndex,
   index,
-} from "drizzle-orm/pg-core";
-import { relations } from "drizzle-orm";
-
-const bytea = customType<{
-  data: Buffer;
-  default: false;
-}>({
-  dataType() {
-    return "bytea";
-  },
-});
+  blob,
+} from "drizzle-orm/sqlite-core";
+import { relations, sql } from "drizzle-orm";
 
 const baseEntity = {
-  id: integer("id").primaryKey().generatedAlwaysAsIdentity(),
-  createdAt: timestamp("created_at").notNull().defaultNow(),
-  updatedAt: timestamp("updated_at").notNull().defaultNow(),
-  isArchived: boolean("is_archived").notNull().default(false),
+  id: integer("id").primaryKey({ autoIncrement: true }),
+  createdAt: integer("created_at", { mode: "timestamp" })
+    .notNull()
+    .default(sql`(cast(strftime('%s', 'now') as integer))`),
+  updatedAt: integer("updated_at", { mode: "timestamp" })
+    .notNull()
+    .default(sql`(cast(strftime('%s', 'now') as integer))`),
+  isArchived: integer("is_archived", { mode: "boolean" })
+    .notNull()
+    .default(false),
 };
 
-export const MagicTokensTable = pgTable(
+export const MagicTokensTable = sqliteTable(
   "MagicTokens",
   {
     ...baseEntity,
     token: text("token").unique().notNull(),
     email: text("email").notNull(),
-    expiresAt: timestamp("expires_at").notNull(),
+    expiresAt: integer("expires_at", { mode: "timestamp" }).notNull(),
   },
   (table) => [
     uniqueIndex("MagicTokens_unique_idx").on(table.token),
@@ -40,7 +35,7 @@ export const MagicTokensTable = pgTable(
   ]
 );
 
-export const UserTable = pgTable(
+export const UserTable = sqliteTable(
   "User",
   {
     ...baseEntity,
@@ -50,22 +45,21 @@ export const UserTable = pgTable(
   (table) => [uniqueIndex("User_email_unique_idx").on(table.email)]
 );
 
-export const UserCredentialTable = pgTable(
+export const UserCredentialTable = sqliteTable(
   "UserCredential",
   {
     ...baseEntity,
     userId: integer("user_id").notNull(),
-    name: text("name").notNull(), // A human-readable name for the credential
-    externalId: text("external_id").notNull().unique(), // credentialID from WebAuthn
-    publicKey: bytea("public_key").unique().notNull(), // Public key material
-    signCount: integer("sign_count").default(0).notNull(), // Security counter
-    transports: text("transports").array(), // Authenticator transports (e.g., "usb", "ble", "nfc", "internal")
+    name: text("name").notNull(),
+    externalId: text("external_id").notNull().unique(),
+    publicKey: blob("public_key").unique().notNull(),
+    signCount: integer("sign_count").default(0).notNull(),
+    transports: text("transports", { mode: "json" }),
     domain: text("domain").notNull(),
   },
   (table) => [index("UserCredential_user_id_idx").on(table.userId)]
 );
 
-// Define foreign key relations
 export const userRelations = relations(UserTable, ({ many }) => ({
   credentials: many(UserCredentialTable),
 }));

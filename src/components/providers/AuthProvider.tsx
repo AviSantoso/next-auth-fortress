@@ -1,6 +1,5 @@
 "use client";
 
-import { LoadingPage } from "../pages/LoadingPage";
 import { redirect } from "next/navigation";
 import { getGoogleAuthUrl } from "@/actions/getGoogleAuthUrl";
 import { clearAuth } from "@/actions/clearAuth";

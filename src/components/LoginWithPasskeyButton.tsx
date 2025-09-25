@@ -3,7 +3,7 @@
 import React, { useState } from "react";
 import { redirect } from "next/navigation";
 import { startAuthentication } from "@simplewebauthn/browser";
-import { Button, Icon, HStack, Text, Input, Box } from "@chakra-ui/react";
+import { Button, Icon, HStack, Text } from "@chakra-ui/react";
 import { MdKey } from "react-icons/md";
 import { get } from "lodash";
 

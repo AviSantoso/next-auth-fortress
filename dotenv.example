@@ -1,0 +1,34 @@
+# Database connection
+# Format: postgres://username:password@host:port/database
+DATABASE_URL="postgres://postgres:password@localhost:5432/auth_fortress"
+
+# Session security - Generate a strong random key (32+ characters)
+# You can use: openssl rand -base64 32
+SESSION_KEY="your_secure_session_key_here"
+
+# Email service - Get from https://resend.com
+RESEND_API_KEY="re_123456789"
+
+# Google OAuth credentials - Create at https://console.cloud.google.com
+GOOGLE_CLIENT_ID="your_google_client_id.apps.googleusercontent.com"
+GOOGLE_CLIENT_SECRET="your_google_client_secret"
+# Route where Google redirects after OAuth (must match Google Console settings)
+GOOGLE_REDIRECT_URL="/api/auth/login-google"
+
+# WebAuthn settings
+# For local development: localhost
+# For production: your domain without protocol (e.g., example.com)
+RPID="localhost"
+
+# Application URL
+# Development: http://localhost:3000
+# Production: https://your-domain.com
+NEXT_PUBLIC_APP_URL="http://localhost:3000"
+
+# Branding
+# The name displayed throughout the application
+BRAND_NAME="Next-Auth Fortress"
+
+# Email configuration
+# Format: "Display Name <email@example.com>"
+NOREPLY_EMAIL="Next-Auth Fortress <noreply@example.com>"

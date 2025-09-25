@@ -44,3 +44,4 @@ chakra-docs.txt
 llms
 .env*.local
 repomix-output.xml
+local.db

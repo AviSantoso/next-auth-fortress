@@ -50,7 +50,7 @@ export async function verifyLogin(
       expectedRPID: HOST_SETTINGS.expectedRPID,
       credential: {
         id: Buffer.from(dbCredential.externalId).toString(),
-        publicKey: new Uint8Array(dbCredential.publicKey),
+        publicKey: dbCredential.publicKey,
         counter: dbCredential.signCount,
         transports:
           (dbCredential.transports as AuthenticatorTransportFuture[]) ||

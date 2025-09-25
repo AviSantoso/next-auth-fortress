@@ -28,8 +28,6 @@ export async function getRegistrationOptions(): Promise<PublicKeyCredentialCreat
     throw new Error("User not found in database for the given ID.");
   }
 
-  console.log({ email, user });
-
   const challenge = await generateChallenge();
 
   session.challenge = challenge;
@@ -37,8 +35,6 @@ export async function getRegistrationOptions(): Promise<PublicKeyCredentialCreat
   await session.save();
 
   const idBytes = stringToUint8Array(user.id.toString());
-
-  console.log({ idBytes });
 
   const userName = user.email;
 

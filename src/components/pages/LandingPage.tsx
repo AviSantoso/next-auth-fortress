@@ -21,8 +21,6 @@ import {
   HStack,
   Table,
 } from "@chakra-ui/react";
-import { AddPasskeyButton } from "../AddPasskeyButton";
-import { LogoutButton } from "../LogoutButton";
 import {
   MdKey,
   MdDescription,
@@ -42,7 +40,7 @@ const FAQ_URL = `${REPO_BASE}/blob/main/FAQ.md`;
 const WEBAUTHN_TUTORIAL_URL = `${REPO_BASE}/blob/main/WEBAUTHN_TUTORIAL.md`;
 
 const BLOG_URL = "https://avisantoso.com/blog";
-const AI_HELP_URL = "https://verticalai.com.ai";
+const AI_HELP_URL = "https://verticalai.com.au";
 
 export function LandingPage() {
   const { email } = useEmail();
@@ -77,7 +75,7 @@ export function LandingPage() {
                   <Text fontSize="sm" color="fg.muted">
                     Create your environment file:
                   </Text>
-                  <Code size="sm">cp .env.example .env.local</Code>
+                  <Code size="sm">cp dotenv.example .env.local</Code>
 
                   <Table.Root size="sm" mt={2} variant="outline">
                     <Table.Body>

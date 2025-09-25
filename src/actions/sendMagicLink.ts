@@ -51,54 +51,58 @@ function generateMagicLinkEmail({
           }
           
           a {
-            color: black;
+            color: #2c5282;
             text-decoration: none;
           }
           
           a:visited {
-            color: black;
+            color: #2c5282;
           }
           
           a:hover {
-            color: #666666;
+            color: #4299e1;
           }
           
           a:active {
-            color: #888888;
+            color: #3182ce;
           }
           
           .button {
-            background-color: transparent;
-            border: 1px solid #333333;
+            background-color: #2b6cb0;
+            border: none;
             border-radius: 4px;
-            color: #333333;
-            padding: 10px 20px;
+            color: white;
+            padding: 12px 24px;
             text-align: center;
             display: inline-block;
             font-size: 16px;
             margin: 4px 2px;
             cursor: pointer;
             font-weight: 500;
+            box-shadow: 0 1px 3px rgba(0,0,0,0.12);
           }
           
           .link-box {
             margin: 15px 0;
-            padding: 10px;
-            background-color: #f8f8f8;
+            padding: 12px;
+            background-color: #ebf8ff;
             border-radius: 4px;
             word-break: break-all;
+            border: 1px solid #bee3f8;
           }
           
           .brand-link {
-            color: #e91e63 !important;
+            color: #3182ce !important;
             font-weight: 500;
           }
           
           .footer {
             margin-top: 20px;
-            color: #666666;
+            color: #718096;
             font-size: 12px;
             text-align: center;
+            border-top: 1px solid #e2e8f0;
+            padding-top: 20px;
           }
           
           .footer p {
@@ -109,15 +113,15 @@ function generateMagicLinkEmail({
             max-width: 600px;
             margin: 0 auto;
             padding: 20px;
-            font-family: sans-serif;
-            color: #333333;
+            font-family: Arial, sans-serif;
+            color: #2d3748;
             line-height: 1.6;
           }
         </style>
       </head>
       <body>
         <div class="container">
-          <h1 style="color: #e91e63; margin-bottom: 20px;">${BRAND_NAME}</h1>
+          <h1 style="color: #2b6cb0; margin-bottom: 20px;">${BRAND_NAME}</h1>
           <p>Hello,</p>
           <p>We received a request to sign in to your account using this email address. Click the button below to sign in:</p>
           
@@ -132,14 +136,14 @@ function generateMagicLinkEmail({
           
           <p>If you didn't request this link, you can safely ignore this email.</p>
           
-          <div style="margin-top: 30px; padding-top: 15px; border-top: 1px solid #eeeeee;">
-            <p style="color: #666666; font-size: 14px;">
+          <div style="margin-top: 30px; padding-top: 15px; border-top: 1px solid #e2e8f0;">
+            <p style="color: #718096; font-size: 14px;">
               <strong>Link expires:</strong> ${expiryTime}
             </p>
           </div>
           
           <div class="footer">
-            <p>Built with love by <a href="https://avisantoso.com" class="brand-link" target="_blank">Avi Santoso</a>.</p>
+            <p>Built by <a href="https://avisantoso.com" class="brand-link" target="_blank">Avi Santoso</a>.</p>
             <p>Need an AI expert? Visit <a href="https://www.verticalai.com.au" class="brand-link" target="_blank">VerticalAI</a>.</p>
             <p>&copy; ${new Date().getFullYear()} ${BRAND_NAME}. All rights reserved.</p>
             <p>Sent at ${sentAtTime}</p>

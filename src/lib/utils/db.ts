@@ -1,14 +1,15 @@
-import { drizzle } from "drizzle-orm/neon-http";
 import * as schema from "./schema";
+import "dotenv/config";
+import { drizzle } from "drizzle-orm/libsql";
 
-const DATABASE_URL = process.env.DATABASE_URL as string;
+const DB_FILE_NAME = process.env.DB_FILE_NAME as string;
 
-if (!DATABASE_URL) {
-  throw new Error("DATABASE_URL is not set");
+if (!DB_FILE_NAME) {
+  throw new Error("DB_FILE_NAME is not set");
 }
 
 export const db = drizzle({
-  connection: DATABASE_URL,
+  connection: DB_FILE_NAME,
   casing: "snake_case",
   schema,
 });
