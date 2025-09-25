@@ -1,5 +1,11 @@
 {
   "name": "next-auth-fortress",
+  "author": "Avi Santoso",
+  "email": "avisantoso@gmail.com",
+  "website": "https://avisantoso.com",
+  "repository": "https://github.com/avisantoso/next-auth-fortress",
+  "description": "Next-Auth Fortress is a modern authentication solution for Next.js applications.",
+  "keywords": ["next-auth", "authentication", "next.js", "chakra-ui", "webauthn"],
   "version": "0.1.0",
   "private": true,
   "scripts": {

@@ -20,15 +20,14 @@ This template is designed to be extensible. Here's the general process for addin
     - Create a corresponding callback API route (e.g., `src/app/api/auth/login-github/route.ts`). This route will handle the code returned by GitHub, exchange it for an access token, fetch the user's email, and then call your `getOrCreateUser` and `setAuth` server actions.
 4.  **Frontend Button:** Add a "Sign in with GitHub" button to `src/components/pages/LoginPage.tsx` that calls your new `getGitHubAuthUrl` action and redirects the user.
 
-### 3. What database can I use besides PostgreSQL?
+### 3. What database is used and what are the deployment considerations?
 
-This template is pre-configured for PostgreSQL, which is recommended and works seamlessly with Vercel Postgres. However, [Drizzle ORM](https://orm.drizzle.team/docs/get-started-postgresql#supported-drivers) is compatible with other databases like MySQL and SQLite.
+This template uses **SQLite** through the `libsql` driver, which makes local development incredibly simple.
 
-To switch, you would need to:
+- **For Local Development:** The database is just a single file (e.g., `local.db`). It's configured in `.env.local` via the `DB_FILE_NAME` variable. This requires zero setup—no separate database server to install or run.
+- **For Production:** Serverless environments like Vercel do not support storing a writable file. Therefore, you **must** use a remote, serverless-compatible SQLite provider. The recommended solution is **[Turso](https://turso.tech/)**.
 
-1.  Install the appropriate database driver (e.g., `mysql2` for MySQL).
-2.  Update the Drizzle client initialization in `src/lib/utils/db.ts`.
-3.  Adjust the schema definitions in `src/lib/utils/schema.ts` if there are any SQL dialect-specific types (e.g., changing `pgTable` to `mysqlTable`).
+The database connection in `src/lib/utils/db.ts` is already configured to switch between the local file in development and a remote Turso database in production, based on your environment variables. Refer to the `README.md` for full deployment instructions.
 
 ### 4. Is this template secure for production?
 
@@ -121,6 +120,42 @@ The database schema (`src/lib/utils/schema.ts`) already includes a `firstName` f
 To build a profile update feature:
 
 1.  **Create a Profile Page:** Create a new page, for example at `src/app/profile/page.tsx`.
-2.  **Build a Form:** On that page, create a form with an input for the user's first name. You can use the `UserDetailsPage.tsx` component as a starting point.
+2.  **Build a Form:** On that page, create a form with an input for the user's first name.
 3.  **Create a Server Action:** Write a new server action (e.g., `updateUserProfile.ts`) that takes the new name, gets the `userId` from the session, and uses a Drizzle query to update the corresponding user in the database.
 4.  **Fetch Existing Data:** Your profile page should also fetch the current user data from the database to pre-populate the form. You can extend the `UserService.ts` for this.
+
+### 11. Why was SQLite chosen for this template?
+
+SQLite was chosen to make the developer experience as frictionless as possible, while still providing a robust path to production.
+
+- **Simplicity:** For local development, there is zero configuration. It works out of the box without needing to install or run a separate database service like PostgreSQL.
+- **Serverless-Friendly:** When paired with a service like [Turso](https://turso.tech/), SQLite becomes a powerful, edge-ready database that fits perfectly into serverless architectures like Vercel.
+- **Low Cost & Portability:** Starting with a local file is free, and providers like Turso have generous free tiers. Your entire database is a single file, making it easy to back up and move.
+
+### 12. How do I customize the magic link email?
+
+The email template is a simple HTML string generated within a server action. You can directly edit it for customization.
+
+1.  Navigate to `src/actions/sendMagicLink.ts`.
+2.  Find the `generateMagicLinkEmail` function.
+3.  The body of this function is a template literal containing the full HTML of the email. You can modify the HTML, inline CSS, and text directly in this string.
+
+For more complex designs, consider using an email framework like [React Email](https://react.email/) or [MJML](https://mjml.io/), generating the HTML, and then integrating it into this function.
+
+### 13. How is client-side state managed?
+
+This template uses [**Zustand**](https://github.com/pmndrs/zustand) for minimal, lightweight global client-side state management.
+
+- **Location:** The store is defined in `src/lib/utils/appStore.ts`.
+- **Usage:** It is currently used on the `LoginPage` to hold the value of the email input. This allows UI elements, like the "Continue with Email" button, to reactively appear or disappear based on the store's state.
+- **Extensibility:** If your application needs more complex client-side state (e.g., managing UI toggles, caching data), you can easily extend this existing Zustand store without pulling in a heavier library like Redux.
+
+### 14. How should I handle authentication errors?
+
+The template provides a foundation for error handling using `try...catch` blocks in the client-side components and a central `toaster` for user notifications.
+
+- **Client-Side:** In components like `AddPasskeyButton.tsx` and `LoginWithPasskeyButton.tsx`, the primary authentication functions (`startRegistration`, `verifyLogin`, etc.) are wrapped in `try...catch` blocks.
+- **User Feedback:** When an error is caught, `toaster.create()` is called to show a user-friendly error message (e.g., "Login was cancelled"). Specific errors, like the user cancelling a WebAuthn prompt, are caught and handled gracefully.
+- **Server-Side:** Server actions throw errors on failure (e.g., if a challenge is missing or verification fails). These errors are caught by the client that called the action.
+
+You can extend this by adding more specific error checks and providing more detailed feedback to the user based on the type of error thrown from the server.

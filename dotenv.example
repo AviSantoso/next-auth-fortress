@@ -1,34 +1,73 @@
-# Database connection
-# Format: postgres://username:password@host:port/database
-DATABASE_URL="postgres://postgres:password@localhost:5432/auth_fortress"
+# -----------------------------------------------------------------------------
+# SESSION & APP CONFIGURATION (Required)
+# -----------------------------------------------------------------------------
 
-# Session security - Generate a strong random key (32+ characters)
-# You can use: openssl rand -base64 32
-SESSION_KEY="your_secure_session_key_here"
+# A secret key (at least 32 characters) for encrypting session cookies with Iron Session.
+# Generate one with: openssl rand -hex 32
+SESSION_KEY=
 
-# Email service - Get from https://resend.com
-RESEND_API_KEY="re_123456789"
-
-# Google OAuth credentials - Create at https://console.cloud.google.com
-GOOGLE_CLIENT_ID="your_google_client_id.apps.googleusercontent.com"
-GOOGLE_CLIENT_SECRET="your_google_client_secret"
-# Route where Google redirects after OAuth (must match Google Console settings)
-GOOGLE_REDIRECT_URL="/api/auth/login-google"
-
-# WebAuthn settings
-# For local development: localhost
-# For production: your domain without protocol (e.g., example.com)
-RPID="localhost"
-
-# Application URL
-# Development: http://localhost:3000
-# Production: https://your-domain.com
+# The full public URL of your application.
+# For local development, this is typically http://localhost:3000
+# For production, it should be your actual domain (e.g., https://yourapp.com)
 NEXT_PUBLIC_APP_URL="http://localhost:3000"
 
-# Branding
-# The name displayed throughout the application
+# The name of your brand or application, used in UI and emails.
 BRAND_NAME="Next-Auth Fortress"
 
-# Email configuration
-# Format: "Display Name <email@example.com>"
-NOREPLY_EMAIL="Next-Auth Fortress <noreply@example.com>"
+
+# -----------------------------------------------------------------------------
+# DATABASE CONFIGURATION
+# -----------------------------------------------------------------------------
+
+# --- For Local Development ---
+# The filename for your local SQLite database.
+# Drizzle will create this file in your project root if it doesn't exist.
+DB_FILE_NAME="local.db"
+
+# --- For Production (e.g., Vercel with Turso) ---
+# Your remote LibSQL database URL from a provider like Turso.
+# This is REQUIRED for serverless deployments.
+TURSO_DATABASE_URL=
+
+# Your authentication token for the remote Turso database.
+# This is REQUIRED for serverless deployments.
+TURSO_AUTH_TOKEN=
+
+
+# -----------------------------------------------------------------------------
+# WEBAUTHN / PASSKEYS (Required)
+# -----------------------------------------------------------------------------
+
+# The Relying Party ID for WebAuthn. This MUST be the domain name of your site.
+# It MUST NOT include the protocol (https://) or port.
+# For local development: "localhost"
+# For production (e.g., yourapp.com): "yourapp.com"
+RPID="localhost"
+
+
+# -----------------------------------------------------------------------------
+# OAUTH - GOOGLE (Optional)
+# -----------------------------------------------------------------------------
+
+# Your Google OAuth 2.0 Client ID. Get this from the Google Cloud Console.
+GOOGLE_CLIENT_ID=
+
+# Your Google OAuth 2.0 Client Secret.
+GOOGLE_CLIENT_SECRET=
+
+# The path for Google to redirect to after authentication.
+# This should almost always be /api/auth/login-google
+GOOGLE_REDIRECT_URL="/api/auth/login-google"
+
+
+# -----------------------------------------------------------------------------
+# EMAIL - MAGIC LINKS (Optional)
+# -----------------------------------------------------------------------------
+
+# Your API key from Resend for sending magic link emails.
+RESEND_API_KEY=
+
+# The email address used to send emails from.
+# Must be a domain you have verified with Resend.
+# Example: "Your App Name <noreply@yourdomain.com>"
+NOREPLY_EMAIL=

@@ -11,7 +11,7 @@ export function Footer() {
       px={4}
       mt="auto"
       textAlign="center"
-      opacity={0.5}
+      opacity={0.7}
     >
       <VStack gap={1}>
         <Text fontSize="sm" color="fg.muted">
