@@ -1,6 +1,6 @@
 import { getSession } from "@/lib/utils/getSession";
 import { redirect } from "next/navigation";
-import { DashboardPage } from "@/components/pages/DashboardPage";
+import { LandingPage } from "@/components/pages/LandingPage";
 
 export default async function Page() {
   const session = await getSession();
@@ -10,5 +10,5 @@ export default async function Page() {
     redirect("/login");
   }
 
-  return <DashboardPage email={email} />;
+  return <LandingPage />;
 }

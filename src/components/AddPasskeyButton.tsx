@@ -9,13 +9,13 @@ import { get } from "lodash";
 import { getRegistrationOptions } from "@/actions/passkeys/getRegistrationOptions";
 import { verifyRegistration } from "@/actions/passkeys/verifyRegistration";
 import { toaster } from "./ui/toaster";
+import { useRouter } from "next/navigation";
 
 export interface AddPasskeyButtonProps {
   variant?: "solid" | "outline" | "ghost";
   colorPalette?: string;
   size?: "sm" | "md" | "lg";
   fullWidth?: boolean;
-  onSuccess?: () => void;
 }
 
 export function AddPasskeyButton({
@@ -23,8 +23,8 @@ export function AddPasskeyButton({
   colorPalette = "blue",
   size = "lg",
   fullWidth = true,
-  onSuccess,
 }: AddPasskeyButtonProps) {
+  const router = useRouter();
   const [isLoading, setIsLoading] = useState(false);
 
   const handleAddPasskey = async () => {
@@ -53,11 +53,7 @@ export function AddPasskeyButton({
         type: "success",
       });
 
-      if (onSuccess) {
-        onSuccess();
-      } else {
-        window.location.reload();
-      }
+      router.push("/");
     } catch (err: unknown) {
       if (get(err, "name") === "NotAllowedError") {
         toaster.create({

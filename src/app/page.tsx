@@ -9,6 +9,5 @@ export default async function Page() {
     redirect("/login");
   }
 
-  // Skip user details and go directly to dashboard
-  redirect("/dashboard");
+  redirect("/landing");
 }

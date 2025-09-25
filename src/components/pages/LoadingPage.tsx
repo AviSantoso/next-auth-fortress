@@ -9,7 +9,6 @@ import {
   Spinner,
   Progress,
 } from "@chakra-ui/react";
-import { MainLayout } from "@/components/layout/MainLayout";
 import { useState } from "react";
 import { useInterval } from "usehooks-ts";
 
@@ -66,11 +65,7 @@ export function LoadingPage() {
             <Box w="full">
               <Progress.Root value={progress} max={100}>
                 <Progress.Track>
-                  <Progress.Range
-                    style={{
-                      backgroundColor: "var(--chakra-colors-blue-solid)",
-                    }}
-                  />
+                  <Progress.Range colorPalette="blue" />
                 </Progress.Track>
               </Progress.Root>
             </Box>

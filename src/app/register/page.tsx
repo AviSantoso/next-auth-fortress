@@ -1,4 +1,4 @@
-import { UserDetailsPage } from "@/components/pages/UserDetailsPage";
+import { RegisterPage } from "@/components/pages/RegisterPage";
 import { getSession } from "@/lib/utils/getSession";
 import { redirect } from "next/navigation";
 
@@ -10,5 +10,5 @@ export default async function Page() {
     redirect("/login");
   }
 
-  return <UserDetailsPage email={session.email} />;
+  return <RegisterPage />;
 }

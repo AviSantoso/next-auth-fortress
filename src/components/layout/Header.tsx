@@ -1,9 +1,10 @@
 "use client";
 
-import { Box, Flex, Heading, HStack } from "@chakra-ui/react";
+import { Box, Flex, Heading, Icon } from "@chakra-ui/react";
 import { useRouter } from "next/navigation";
 import { useEmail } from "@/components/providers/AuthProvider";
 import { LogoutButton } from "../LogoutButton";
+import { MdCastle } from "react-icons/md";
 
 export function Header() {
   const router = useRouter();
@@ -25,14 +26,17 @@ export function Header() {
         maxW="container.xl"
         mx="auto"
       >
-        <Heading
-          size="md"
-          color="blue.solid"
-          cursor="pointer"
-          onClick={() => router.push("/")}
-        >
-          Next-Auth Fortress
-        </Heading>
+        <Flex gap={4} align="center">
+          <Icon as={MdCastle} scale={1.4} />
+          <Heading
+            size="xl"
+            cursor="pointer"
+            fontWeight="bold"
+            onClick={() => router.push("/")}
+          >
+            Next-Auth Fortress
+          </Heading>
+        </Flex>
 
         {email ? <LogoutButton /> : null}
       </Flex>

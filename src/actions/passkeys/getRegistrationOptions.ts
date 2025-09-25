@@ -5,22 +5,30 @@ import type { GenerateRegistrationOptionsOpts } from "@simplewebauthn/server";
 import type { PublicKeyCredentialCreationOptionsJSON } from "@simplewebauthn/types";
 
 import { getSession } from "@/lib/utils/getSession";
-import { generateChallenge, HOST_SETTINGS } from "@/lib/utils/webauthn";
+import {
+  generateChallenge,
+  HOST_SETTINGS,
+  stringToUint8Array,
+} from "@/lib/utils/webauthn";
 import { getUserByEmail } from "@/lib/services/UserService";
 
-export async function getRegistrationOptions(): Promise<PublicKeyCredentialCreationOptionsJSON | null> {
+export async function getRegistrationOptions(): Promise<PublicKeyCredentialCreationOptionsJSON> {
   const session = await getSession();
   const email = session.email;
 
   if (!email) {
+    console.error("User not authenticated. Cannot generate passkey options.");
     throw new Error("User not authenticated. Cannot generate passkey options.");
   }
 
   const user = await getUserByEmail({ email });
 
   if (!user) {
+    console.error("User not found in database for the given ID.");
     throw new Error("User not found in database for the given ID.");
   }
+
+  console.log({ email, user });
 
   const challenge = await generateChallenge();
 
@@ -28,7 +36,9 @@ export async function getRegistrationOptions(): Promise<PublicKeyCredentialCreat
 
   await session.save();
 
-  const idBytes = Uint8Array.from(Buffer.from(user.id.toString(16), "hex"));
+  const idBytes = stringToUint8Array(user.id.toString());
+
+  console.log({ idBytes });
 
   const userName = user.email;
 

@@ -4,15 +4,23 @@ import { Box, Text, Link, VStack } from "@chakra-ui/react";
 
 export function Footer() {
   return (
-    <Box as="footer" width="full" py={6} px={4} mt="auto" textAlign="center">
+    <Box
+      as="footer"
+      width="full"
+      py={6}
+      px={4}
+      mt="auto"
+      textAlign="center"
+      opacity={0.5}
+    >
       <VStack gap={1}>
         <Text fontSize="sm" color="fg.muted">
-          Built with love by{" "}
+          Built by{" "}
           <Link
             href="https://avisantoso.com"
             target="_blank"
             rel="noopener noreferrer"
-            color="pink.solid"
+            color="blue.solid"
             fontWeight="medium"
           >
             Avi Santoso
@@ -25,7 +33,7 @@ export function Footer() {
             href="https://www.verticalai.com.au"
             target="_blank"
             rel="noopener noreferrer"
-            color="pink.solid"
+            color="blue.solid"
             fontWeight="medium"
           >
             VerticalAI

@@ -15,3 +15,8 @@ export const HOST_SETTINGS = {
 export async function generateChallenge(): Promise<string> {
   return crypto.randomBytes(32).toString("hex");
 }
+
+export function stringToUint8Array(str: string): Uint8Array<ArrayBuffer> {
+  const encoder = new TextEncoder();
+  return encoder.encode(str);
+}
