@@ -111,7 +111,7 @@ export async function verifyRegistration(
       name: user.email,
       externalId: credential.id,
       publicKey: credential.publicKey as Buffer,
-      signCount: credential.counter,
+      signCount: 0, // Always set to 0 for new passkeys
       transports: registrationResponse.response
         .transports as AuthenticatorTransportFuture[],
       domain: HOST_SETTINGS.expectedOrigin,
